@@ -2,63 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Steam Labs Reservation Portal</title>
+<title>Steam Labs Prototype Testing Facility</title>
 
 <style>
     body {
+        margin: 0;
         font-family: Arial, sans-serif;
-        text-align: center;
-        background: #111;
+        background: #0d0d0f;
         color: #f2f2f2;
-        padding: 40px;
-        overflow: hidden;
-    }
-
-    h1 {
-        font-size: 2.5em;
+        text-align: center;
+        overflow-x: hidden;
     }
 
     .container {
-        max-width: 700px;
+        max-width: 800px;
         margin: auto;
-        position: relative;
-        z-index: 2;
+        padding: 40px;
     }
 
-    img {
-        max-width: 100%;
-        border-radius: 12px;
-        margin: 20px 0;
+    h1 {
+        color: #ffd166;
+        margin-bottom: 10px;
+    }
+
+    #status {
+        font-size: 1.2em;
+        margin-top: 20px;
+        color: #06d6a0;
+        min-height: 40px;
+    }
+
+    .bar {
+        width: 100%;
+        background: #222;
+        border-radius: 10px;
+        margin-top: 20px;
+        overflow: hidden;
+    }
+
+    .progress {
+        width: 0%;
+        height: 20px;
+        background: #4cc9f0;
+        transition: width 0.5s;
+    }
+
+    #result {
+        display: none;
+        margin-top: 30px;
+        font-size: 1.4em;
+        color: #ffd166;
     }
 
     button {
-        padding: 15px 25px;
-        font-size: 18px;
+        margin-top: 20px;
+        padding: 12px 18px;
         border: none;
-        border-radius: 10px;
+        border-radius: 8px;
         cursor: pointer;
         background: #ff4d4d;
         color: white;
-        margin-top: 20px;
+        font-size: 16px;
     }
 
     button:hover {
         background: #ff1a1a;
     }
 
-    #message {
-        margin-top: 20px;
-        font-size: 1.3em;
-        color: #ffd166;
+    /* Popup */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #1e1e1e;
+        padding: 25px;
+        border-radius: 10px;
+        border: 2px solid #ff4d4d;
+        z-index: 1000;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 999;
     }
 
     /* Confetti */
     .confetti {
         position: fixed;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         top: -10px;
-        z-index: 1;
         animation: fall linear forwards;
     }
 
@@ -68,104 +109,84 @@
             opacity: 0;
         }
     }
-
-    /* Fake error popup */
-    .popup {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #1e1e1e;
-        border: 2px solid #ff4d4d;
-        padding: 25px;
-        width: 320px;
-        z-index: 999;
-        box-shadow: 0 0 20px rgba(0,0,0,0.8);
-        border-radius: 10px;
-    }
-
-    .popup h2 {
-        color: #ff4d4d;
-        margin-top: 0;
-    }
-
-    .popup button {
-        background: #444;
-        margin-top: 15px;
-    }
-
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.6);
-        z-index: 998;
-    }
 </style>
 </head>
 
 <body>
 
 <div class="container">
+    <h1 id="logo">STEAM LABS</h1>
+    <p>Prototype Testing Facility</p>
 
-    <h1>🤦 Steam Labs Reservation Portal</h1>
+    <div id="status">Initializing system...</div>
 
-    <p id="message">
-        Your purchase request is being processed...
-    </p>
+    <div class="bar">
+        <div class="progress" id="progress"></div>
+    </div>
 
-    <img src="https://media.giphy.com/media/l2JHRhAtnJSDNJ2py/giphy.gif" alt="facepalm gif">
+    <div id="result">
+        🤦 Steam Labs Trust Experiment Complete<br><br>
+        There was never a prototype.<br><br>
+        <strong>You got Steam Labs’d.</strong>
+    </div>
 
-    <button onclick="gotYou()">Click if I got you</button>
-
+    <button onclick="reveal()">Continue</button>
 </div>
 
-<audio id="sound" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
-
-<!-- Fake popup -->
+<!-- Popup -->
 <div class="overlay" id="overlay"></div>
-
 <div class="popup" id="popup">
-    <h2>System Error</h2>
-    <p>Steam Labs Reservation Module has encountered an unexpected humor overflow.</p>
-    <p>Error Code: LOL-404-GOTCHA</p>
-    <button onclick="closePopup()">Close</button>
+    <h2>Achievement Unlocked</h2>
+    <p>Trusting Sibling</p>
+    <button onclick="closePopup()">Nice...</button>
 </div>
 
 <script>
-function gotYou() {
-    document.getElementById("message").innerHTML =
-        "😂 GOT YOU! There was never a console. You just got Steam Labs’d.";
+let progress = 0;
+let messages = [
+    "Scanning Steam library...",
+    "Analyzing playtime...",
+    "Checking backlog...",
+    "Evaluating gamer behavior...",
+    "Detecting curiosity levels..."
+];
 
-    document.getElementById("sound").play();
+function updateLoading() {
+    let bar = document.getElementById("progress");
+    let status = document.getElementById("status");
 
+    if (progress < 100) {
+        progress += 10;
+        bar.style.width = progress + "%";
+        status.innerText = messages[Math.floor(Math.random()*messages.length)];
+        setTimeout(updateLoading, 400);
+    }
+}
+
+updateLoading();
+
+function reveal() {
+    document.getElementById("result").style.display = "block";
     launchConfetti();
     showPopup();
 }
 
 /* Confetti */
 function launchConfetti() {
-    const colors = ["#ff4d4d", "#ffd166", "#06d6a0", "#4cc9f0", "#f72585"];
+    const colors = ["#ff4d4d","#ffd166","#06d6a0","#4cc9f0","#f72585"];
 
     for (let i = 0; i < 120; i++) {
-        let confetti = document.createElement("div");
-        confetti.classList.add("confetti");
+        let c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.animationDuration = (Math.random()*3+2)+"s";
+        document.body.appendChild(c);
 
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
-
-        document.body.appendChild(confetti);
-
-        setTimeout(() => confetti.remove(), 5000);
+        setTimeout(() => c.remove(), 5000);
     }
 }
 
-/* Popup */
 function showPopup() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("popup").style.display = "block";
@@ -175,6 +196,16 @@ function closePopup() {
     document.getElementById("overlay").style.display = "none";
     document.getElementById("popup").style.display = "none";
 }
+
+/* Konami Code Easter egg */
+let input = "";
+document.addEventListener("keydown", (e) => {
+    input += e.key;
+    if (input.includes("ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba")) {
+        alert("Developer Mode: Steam Toaster detected. It still doesn't exist.");
+        input = "";
+    }
+});
 </script>
 
 </body>
