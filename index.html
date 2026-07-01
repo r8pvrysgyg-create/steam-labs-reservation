@@ -54,6 +54,27 @@
         color: #ffd166;
     }
 
+    #intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: #ffd166;
+    font-size: 1.4em;
+    animation: fadeOut 2s ease forwards;
+    animation-delay: 2.5s;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
     button {
         margin-top: 20px;
         padding: 12px 18px;
@@ -112,6 +133,10 @@
 
 <body>
 
+<div id="intro">
+    <div id="introText">Connecting to Steam Labs...</div>
+</div>    
+    
 <div class="container">
     <h1>STEAM LABS</h1>
     <p>Prototype Testing Facility</p>
@@ -163,41 +188,31 @@ function updateLoading() {
     }
 }
 
-updateLoading();
+setTimeout(() => {
+    updateLoading();
+}, 2500); // wait until intro fades;
 
-function reveal() {
-    document.getElementById("result").style.display = "block";
-    launchConfetti();
-    showPopup();
-}
+function updateLoading() {
+    let bar = document.getElementById("progress");
+    let status = document.getElementById("status");
 
-function goToTracking() {
-    window.location.href = "tracking.html";
-}
+    if (progress < 100) {
+        progress += 10;
+        bar.style.width = progress + "%";
 
-function showPopup() {
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("popup").style.display = "block";
-}
+        let msg = messages[Math.floor(Math.random() * messages.length)];
 
-function closePopup() {
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("popup").style.display = "none";
-}
+        // typing effect
+        status.innerText = "";
+        let i = 0;
 
-function launchConfetti() {
-    const colors = ["#ff4d4d","#ffd166","#06d6a0","#4cc9f0","#f72585"];
+        let typer = setInterval(() => {
+            status.innerText += msg[i];
+            i++;
+            if (i >= msg.length) clearInterval(typer);
+        }, 20);
 
-    for (let i = 0; i < 120; i++) {
-        let c = document.createElement("div");
-        c.classList.add("confetti");
-        c.style.left = Math.random() * 100 + "vw";
-        c.style.background = colors[Math.floor(Math.random() * colors.length)];
-        c.style.animationDuration = (Math.random() * 3 + 2) + "s";
-
-        document.body.appendChild(c);
-
-        setTimeout(() => c.remove(), 5000);
+        setTimeout(updateLoading, 500);
     }
 }
 </script>
