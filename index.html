@@ -193,6 +193,8 @@ function updateLoading() {
     let bar = document.getElementById("progress");
     let status = document.getElementById("status");
 
+    if (!bar || !status) return;
+
     if (progress < 100) {
         progress += 10;
         bar.style.width = progress + "%";
@@ -235,49 +237,6 @@ function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
 
- let konami = [];
-const sequence = [
-    "ArrowUp","ArrowUp",
-    "ArrowDown","ArrowDown",
-    "ArrowLeft","ArrowRight",
-    "ArrowLeft","ArrowRight",
-    "b","a"
-];
-
-document.addEventListener("keydown", (e) => {
-    konami.push(e.key);
-    konami = konami.slice(-sequence.length);
-
-    if (konami.join("") === sequence.join("")) {
-        activateDevMode();
-    }
-});
-
-function activateDevMode() {
-    document.getElementById("devConsole").style.display = "block";
-
-    const messages = [
-        "Prototype Status: STILL DOESN'T EXIST",
-        "Loading excuse generator...",
-        "Error: Too much curiosity detected",
-        "Steam Toaster v0.1 initializing...",
-        "Please ask your brother for support"
-    ];
-
-    let i = 0;
-    let text = document.getElementById("devText");
-
-    let interval = setInterval(() => {
-        text.innerText = messages[i];
-        i++;
-        if (i >= messages.length) clearInterval(interval);
-    }, 800);
-}
-
-function closeDev() {
-    document.getElementById("devConsole").style.display = "none";
-    konami = [];
-}   
 /* Confetti */
 function launchConfetti() {
     const colors = ["#ff4d4d","#ffd166","#06d6a0","#4cc9f0","#f72585"];
@@ -294,9 +253,67 @@ function launchConfetti() {
         setTimeout(() => c.remove(), 5000);
     }
 }
+
+/* =========================
+   KONAMI CODE EASTER EGG
+========================= */
+
+let konami = [];
+
+const sequence = [
+    "ArrowUp","ArrowUp",
+    "ArrowDown","ArrowDown",
+    "ArrowLeft","ArrowRight",
+    "ArrowLeft","ArrowRight",
+    "b","a"
+];
+
+document.addEventListener("keydown", (e) => {
+    konami.push(e.key.toLowerCase());
+    konami = konami.slice(-sequence.length);
+
+    const input = konami.join(",");
+    const target = sequence.map(k => k.toLowerCase()).join(",");
+
+    if (input === target) {
+        activateDevMode();
+        konami = [];
+    }
+});
+
+function activateDevMode() {
+    const box = document.getElementById("devConsole");
+    const text = document.getElementById("devText");
+
+    if (!box || !text) return;
+
+    box.style.display = "block";
+
+    const messages = [
+        "Prototype Status: STILL DOESN'T EXIST",
+        "Loading excuse generator...",
+        "Error: Too much curiosity detected",
+        "Steam Toaster v0.1 initializing...",
+        "Please ask your brother for support"
+    ];
+
+    let i = 0;
+
+    let interval = setInterval(() => {
+        text.innerText = messages[i];
+        i++;
+        if (i >= messages.length) clearInterval(interval);
+    }, 800);
+}
+
+function closeDev() {
+    const box = document.getElementById("devConsole");
+    if (box) box.style.display = "none";
+    konami = [];
+}
 </script>
 <div id="devConsole" style="display:none;">
-    <div class="popup" style="display:block;">
+    <div class="popup">
         <h2>🧪 Developer Mode Unlocked</h2>
         <p id="devText">Loading prototype secrets...</p>
         <button onclick="closeDev()">Exit</button>
