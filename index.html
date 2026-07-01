@@ -114,37 +114,9 @@
 
 <body>
 
-<div class="container">
-    <h1 id="logo">STEAM LABS</h1>
-    <p>Prototype Testing Facility</p>
-
-    <div id="status">Initializing system...</div>
-
-    <div class="bar">
-        <div class="progress" id="progress"></div>
-    </div>
-
-    <div id="result">
-        🤦 Steam Labs Trust Experiment Complete<br><br>
-        There was never a prototype.<br><br>
-        <strong>You got Steam Labs’d.</strong>
-    </div>
-
-    <button onclick="goToTracking()">Continue to Tracking Portal</button>
-</div>
-
-<!-- Popup -->
-<div class="overlay" id="overlay"></div>
-<div class="popup" id="popup">
-    <h2>Achievement Unlocked</h2>
-    <p>Trusting Sibling</p>
-    <button onclick="closePopup()">Nice...</button>
-</div>
-
-<function goToTracking() {
-    window.location.href = "tracking.html";
-}>
+<script>
 let progress = 0;
+
 let messages = [
     "Scanning Steam library...",
     "Analyzing playtime...",
@@ -160,7 +132,7 @@ function updateLoading() {
     if (progress < 100) {
         progress += 10;
         bar.style.width = progress + "%";
-        status.innerText = messages[Math.floor(Math.random()*messages.length)];
+        status.innerText = messages[Math.floor(Math.random() * messages.length)];
         setTimeout(updateLoading, 400);
     }
 }
@@ -173,22 +145,11 @@ function reveal() {
     showPopup();
 }
 
-/* Confetti */
-function launchConfetti() {
-    const colors = ["#ff4d4d","#ffd166","#06d6a0","#4cc9f0","#f72585"];
-
-    for (let i = 0; i < 120; i++) {
-        let c = document.createElement("div");
-        c.classList.add("confetti");
-        c.style.left = Math.random() * 100 + "vw";
-        c.style.background = colors[Math.floor(Math.random()*colors.length)];
-        c.style.animationDuration = (Math.random()*3+2)+"s";
-        document.body.appendChild(c);
-
-        setTimeout(() => c.remove(), 5000);
-    }
+function goToTracking() {
+    window.location.href = "tracking.html";
 }
 
+/* Popup */
 function showPopup() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("popup").style.display = "block";
@@ -199,15 +160,22 @@ function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
 
-/* Konami Code Easter egg */
-let input = "";
-document.addEventListener("keydown", (e) => {
-    input += e.key;
-    if (input.includes("ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba")) {
-        alert("Developer Mode: Steam Toaster detected. It still doesn't exist.");
-        input = "";
+/* Confetti */
+function launchConfetti() {
+    const colors = ["#ff4d4d","#ffd166","#06d6a0","#4cc9f0","#f72585"];
+
+    for (let i = 0; i < 120; i++) {
+        let c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(c);
+
+        setTimeout(() => c.remove(), 5000);
     }
-});
+}
 </script>
 
 </body>
