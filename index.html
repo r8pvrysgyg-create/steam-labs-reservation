@@ -69,7 +69,6 @@
         background: #ff1a1a;
     }
 
-    /* Popup */
     .popup {
         display: none;
         position: fixed;
@@ -94,7 +93,6 @@
         z-index: 999;
     }
 
-    /* Confetti */
     .confetti {
         position: fixed;
         width: 8px;
@@ -113,6 +111,34 @@
 </head>
 
 <body>
+
+<div class="container">
+    <h1>STEAM LABS</h1>
+    <p>Prototype Testing Facility</p>
+
+    <div id="status">Initializing system...</div>
+
+    <div class="bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div id="result">
+        🤦 Steam Labs Trust Experiment Complete<br><br>
+        There was never a prototype.<br><br>
+        <strong>You got Steam Labs’d.</strong>
+    </div>
+
+    <button onclick="reveal()">Reveal Result</button>
+    <button onclick="goToTracking()">Continue to Tracking Portal</button>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="popup" id="popup">
+    <h2>Achievement Unlocked</h2>
+    <p>Trusting Sibling</p>
+    <button onclick="closePopup()">Nice...</button>
+</div>
 
 <script>
 let progress = 0;
@@ -149,7 +175,6 @@ function goToTracking() {
     window.location.href = "tracking.html";
 }
 
-/* Popup */
 function showPopup() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("popup").style.display = "block";
@@ -160,7 +185,6 @@ function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
 
-/* Confetti */
 function launchConfetti() {
     const colors = ["#ff4d4d","#ffd166","#06d6a0","#4cc9f0","#f72585"];
 
