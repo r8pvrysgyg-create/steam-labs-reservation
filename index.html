@@ -130,7 +130,7 @@
         <strong>You got Steam Labs’d.</strong>
     </div>
 
-    <button onclick="reveal()">Continue</button>
+    <button onclick="goToTracking()">Continue to Tracking Portal</button>
 </div>
 
 <!-- Popup -->
@@ -141,7 +141,9 @@
     <button onclick="closePopup()">Nice...</button>
 </div>
 
-<script>
+<function goToTracking() {
+    window.location.href = "tracking.html";
+}>
 let progress = 0;
 let messages = [
     "Scanning Steam library...",
