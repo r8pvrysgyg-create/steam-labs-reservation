@@ -176,21 +176,8 @@ let messages = [
     "Detecting curiosity levels..."
 ];
 
-function updateLoading() {
-    let bar = document.getElementById("progress");
-    let status = document.getElementById("status");
-
-    if (progress < 100) {
-        progress += 10;
-        bar.style.width = progress + "%";
-        status.innerText = messages[Math.floor(Math.random() * messages.length)];
-        setTimeout(updateLoading, 400);
-    }
-}
-
-setTimeout(() => {
-    updateLoading();
-}, 2500); // wait until intro fades;
+/* Start loading AFTER intro */
+setTimeout(updateLoading, 2500);
 
 function updateLoading() {
     let bar = document.getElementById("progress");
@@ -213,6 +200,45 @@ function updateLoading() {
         }, 20);
 
         setTimeout(updateLoading, 500);
+    }
+}
+
+/* Buttons */
+function goToTracking() {
+    window.location.href = "tracking.html";
+}
+
+function reveal() {
+    document.getElementById("result").style.display = "block";
+    launchConfetti();
+    showPopup();
+}
+
+/* Popup */
+function showPopup() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("popup").style.display = "none";
+}
+
+/* Confetti */
+function launchConfetti() {
+    const colors = ["#ff4d4d","#ffd166","#06d6a0","#4cc9f0","#f72585"];
+
+    for (let i = 0; i < 120; i++) {
+        let c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(c);
+
+        setTimeout(() => c.remove(), 5000);
     }
 }
 </script>
