@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Steam Labs Reservation Portal</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #111;
+        color: #f2f2f2;
+        padding: 40px;
+        overflow: hidden;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    img {
+        max-width: 100%;
+        border-radius: 12px;
+        margin: 20px 0;
+    }
+
+    button {
+        padding: 15px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background: #ff4d4d;
+        color: white;
+        margin-top: 20px;
+    }
+
+    button:hover {
+        background: #ff1a1a;
+    }
+
+    #message {
+        margin-top: 20px;
+        font-size: 1.3em;
+        color: #ffd166;
+    }
+
+    /* Confetti */
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        top: -10px;
+        z-index: 1;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh) rotate(720deg);
+            opacity: 0;
+        }
+    }
+
+    /* Fake error popup */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #1e1e1e;
+        border: 2px solid #ff4d4d;
+        padding: 25px;
+        width: 320px;
+        z-index: 999;
+        box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        border-radius: 10px;
+    }
+
+    .popup h2 {
+        color: #ff4d4d;
+        margin-top: 0;
+    }
+
+    .popup button {
+        background: #444;
+        margin-top: 15px;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 998;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🤦 Steam Labs Reservation Portal</h1>
+
+    <p id="message">
+        Your purchase request is being processed...
+    </p>
+
+    <img src="https://media.giphy.com/media/l2JHRhAtnJSDNJ2py/giphy.gif" alt="facepalm gif">
+
+    <button onclick="gotYou()">Click if I got you</button>
+
+</div>
+
+<audio id="sound" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
+
+<!-- Fake popup -->
+<div class="overlay" id="overlay"></div>
+
+<div class="popup" id="popup">
+    <h2>System Error</h2>
+    <p>Steam Labs Reservation Module has encountered an unexpected humor overflow.</p>
+    <p>Error Code: LOL-404-GOTCHA</p>
+    <button onclick="closePopup()">Close</button>
+</div>
+
+<script>
+function gotYou() {
+    document.getElementById("message").innerHTML =
+        "😂 GOT YOU! There was never a console. You just got Steam Labs’d.";
+
+    document.getElementById("sound").play();
+
+    launchConfetti();
+    showPopup();
+}
+
+/* Confetti */
+function launchConfetti() {
+    const colors = ["#ff4d4d", "#ffd166", "#06d6a0", "#4cc9f0", "#f72585"];
+
+    for (let i = 0; i < 120; i++) {
+        let confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 5000);
+    }
+}
+
+/* Popup */
+function showPopup() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("popup").style.display = "none";
+}
+</script>
+
+</body>
+</html>
