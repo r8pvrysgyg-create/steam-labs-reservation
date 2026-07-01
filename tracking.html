@@ -59,6 +59,15 @@
         margin-top: 20px;
         font-size: 0.95em;
         color: #aaa;
+        min-height: 20px;
+    }
+
+    #finalNote {
+        margin-top: 15px;
+        color: #ffd166;
+        font-size: 0.9em;
+        opacity: 0;
+        transition: opacity 0.5s;
     }
 </style>
 </head>
@@ -79,16 +88,16 @@
 
     <div id="easter">
         🤦 Surprise! There was never a shipment.<br><br>
-        You have been successfully enrolled in the Steam Labs Trust Experiment.
+        You have been enrolled in the Steam Labs Trust Experiment.
     </div>
 
     <button onclick="reaction()">Share your reaction</button>
 
     <div class="reactionBox" id="reactionBox"></div>
 
-    <button onclick="window.location.href='halloffame.html'">
-View Final Report
-</button>
+    <button onclick="goToFinal()">View Final Report</button>
+
+    <div id="finalNote">Generating final analysis...</div>
 
 </div>
 
@@ -108,6 +117,17 @@ function reaction() {
 
     document.getElementById("reactionBox").innerText =
         reactions[Math.floor(Math.random() * reactions.length)];
+}
+
+function goToFinal() {
+    const note = document.getElementById("finalNote");
+
+    note.style.opacity = 1;
+    note.innerText = "Generating final report...";
+
+    setTimeout(() => {
+        window.location.href = "halloffame.html";
+    }, 1200);
 }
 </script>
 
