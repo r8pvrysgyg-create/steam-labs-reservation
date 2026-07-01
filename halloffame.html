@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Steam Labs - Final Report</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0b0b0d;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .box {
+        max-width: 800px;
+        margin: auto;
+        background: #1a1a1d;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    h1 {
+        color: #ffd166;
+    }
+
+    .score {
+        font-size: 2em;
+        margin: 20px 0;
+        color: #06d6a0;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 6px 12px;
+        margin: 5px;
+        border-radius: 8px;
+        background: #222;
+        color: #4cc9f0;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 12px 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #ff4d4d;
+        color: white;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background: #ff1a1a;
+    }
+
+    #final {
+        display: none;
+        margin-top: 25px;
+        font-size: 1.3em;
+        color: #ffd166;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h1>🏆 Steam Labs Test Subject Report</h1>
+
+    <p>Subject ID: YOU-7749</p>
+
+    <div class="score" id="score">
+        Processing behavioral data...
+    </div>
+
+    <div>
+        <span class="tag">High Curiosity</span>
+        <span class="tag">Excessive Button Clicking</span>
+        <span class="tag">Trust Level: Questionable</span>
+        <span class="tag">Gamer Detected</span>
+    </div>
+
+    <button onclick="generateReport()">Generate Final Verdict</button>
+
+    <div id="final">
+        🤦 FINAL RESULT:<br><br>
+        This subject fully trusted a fake Steam announcement.<br><br>
+        Recommendation: Never let them near early access games again.
+    </div>
+
+    <br>
+
+    <button onclick="goBack()">Return to Facility</button>
+</div>
+
+<script>
+function generateReport() {
+    let score = document.getElementById("score");
+    let final = document.getElementById("final");
+
+    let value = Math.floor(Math.random() * 40 + 60);
+
+    let messages = [
+        "Analyzing braincell allocation...",
+        "Checking Steam backlog severity...",
+        "Evaluating trust levels...",
+        "Measuring prank susceptibility..."
+    ];
+
+    let i = 0;
+
+    let interval = setInterval(() => {
+        score.innerText = messages[i];
+        i++;
+        if (i >= messages.length) {
+            clearInterval(interval);
+            score.innerText = "Final Score: " + value + "% Compatibility with Reality™";
+            final.style.display = "block";
+        }
+    }, 700);
+}
+
+function goBack() {
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
