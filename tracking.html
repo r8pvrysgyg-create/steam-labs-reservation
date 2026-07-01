@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Steam Labs Tracking Portal</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0b0b0d;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .box {
+        max-width: 750px;
+        margin: auto;
+        background: #1a1a1d;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+        color: #ffd166;
+    }
+
+    .status {
+        margin-top: 20px;
+        color: #06d6a0;
+        font-size: 1.2em;
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 12px 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        background: #ff4d4d;
+        color: white;
+    }
+
+    button:hover {
+        background: #ff1a1a;
+    }
+
+    #easter {
+        display: none;
+        margin-top: 25px;
+        font-size: 1.3em;
+        color: #ffd166;
+    }
+
+    .reactionBox {
+        margin-top: 20px;
+        font-size: 0.95em;
+        color: #aaa;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>📦 Steam Labs Tracking Portal</h1>
+
+    <p>Tracking ID: SL-TEST-7749</p>
+
+    <div class="status">
+        Status: Awaiting prototype that does not exist...
+    </div>
+
+    <button onclick="reveal()">Check Hidden Status Update</button>
+
+    <div id="easter">
+        🤦 Surprise! There was never a shipment.<br><br>
+        You have been successfully enrolled in the Steam Labs Trust Experiment.
+    </div>
+
+    <button onclick="reaction()">Share your reaction</button>
+
+    <div class="reactionBox" id="reactionBox"></div>
+
+</div>
+
+<script>
+function reveal() {
+    document.getElementById("easter").style.display = "block";
+}
+
+function reaction() {
+    const reactions = [
+        "😂 Reaction logged: disbelief",
+        "😐 Reaction logged: betrayal",
+        "🤯 Reaction logged: mind blown",
+        "💀 Reaction logged: emotional damage",
+        "👍 Reaction logged: respect"
+    ];
+
+    document.getElementById("reactionBox").innerText =
+        reactions[Math.floor(Math.random() * reactions.length)];
+}
+</script>
+
+</body>
+</html>
